@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-cream-100 font-sans text-charcoal-800;
+  }
+
+  ::selection {
+    background-color: #D4AF6A33;
+    color: #1A1918;
+  }
+}
+
+@layer components {
+  .gold-rule {
+    @apply block w-10 h-px bg-gold-500;
+  }
+
+  .label-tag {
+    @apply text-xs tracking-widest uppercase font-sans text-gold-500 font-medium;
+  }
+
+  .section-heading {
+    @apply font-serif text-4xl md:text-5xl text-charcoal-800 leading-tight;
+  }
+
+  .section-subheading {
+    @apply font-sans text-lg text-stone-500 leading-relaxed;
+  }
+
+  .luxury-input {
+    @apply w-full bg-white border border-stone-100 px-4 py-3.5 text-sm text-charcoal-800 placeholder-stone-300
+           focus:border-gold-500 focus:outline-none focus:ring-0
+           transition-colors duration-200 font-sans;
+  }
+
+  .luxury-button {
+    @apply w-full bg-gold-500 hover:bg-gold-600 text-white text-xs tracking-widest uppercase font-medium
+           px-8 py-4 transition-all duration-300 font-sans cursor-pointer;
+  }
+
+  .luxury-button-outline {
+    @apply border border-gold-500 text-gold-500 hover:bg-gold-500 hover:text-white text-xs tracking-widest uppercase font-medium
+           px-8 py-4 transition-all duration-300 font-sans cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Subtle paper texture on cream backgrounds */
+.texture-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23FAF8F5'/%3E%3Ccircle cx='1' cy='1' r='0.5' fill='%23E8E2DA' opacity='0.3'/%3E%3C/svg%3E");
+  background-size: 4px 4px;
+  opacity: 0.5;
+  pointer-events: none;
+}
