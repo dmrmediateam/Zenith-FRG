@@ -69,7 +69,7 @@ export default function Hero() {
 
         <h1
           id="hero-heading"
-          className="font-serif text-7xl tracking-[0.15em] text-zenith-cream sm:text-8xl md:text-9xl"
+          className="font-serif text-6xl tracking-[0.1em] text-zenith-cream sm:tracking-[0.15em] sm:text-8xl md:text-9xl"
         >
           ZENITH
         </h1>

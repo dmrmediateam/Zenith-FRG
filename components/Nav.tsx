@@ -14,6 +14,7 @@ const LINKS = [
 
 export default function Nav() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +23,13 @@ export default function Nav() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
 
   return (
     <header
@@ -65,10 +73,67 @@ export default function Nav() {
           href="#contact"
           data-cta="header"
           onClick={() => trackEvent("hero_cta_click", { location: "header" })}
-          className="inline-flex items-center justify-center border border-zenith-cream px-4 py-2 text-[11px] font-sub font-medium uppercase tracking-[0.2em] text-zenith-cream transition-colors hover:bg-zenith-cream hover:text-zenith-charcoal"
+          className="hidden items-center justify-center border border-zenith-cream px-4 py-2 text-[11px] font-sub font-medium uppercase tracking-[0.2em] text-zenith-cream transition-colors hover:bg-zenith-cream hover:text-zenith-charcoal md:inline-flex"
         >
           Request Info
         </a>
+
+        <button
+          type="button"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen((open) => !open)}
+          className="relative z-10 flex h-10 w-10 items-center justify-center md:hidden"
+        >
+          <span className="relative block h-4 w-5">
+            <span
+              className={`absolute left-0 block h-px w-5 bg-zenith-cream transition-all duration-300 ${
+                isMenuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
+              }`}
+            />
+            <span
+              className={`absolute left-0 top-1/2 block h-px w-5 -translate-y-1/2 bg-zenith-cream transition-opacity duration-200 ${
+                isMenuOpen ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`absolute left-0 block h-px w-5 bg-zenith-cream transition-all duration-300 ${
+                isMenuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "top-4"
+              }`}
+            />
+          </span>
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      <div
+        className={`md:hidden overflow-hidden bg-zenith-charcoal/95 backdrop-blur-md transition-all duration-300 ${
+          isMenuOpen ? "max-h-screen border-t border-zenith-cream/10" : "max-h-0"
+        }`}
+      >
+        <nav className="flex flex-col px-6 py-6">
+          {LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsMenuOpen(false)}
+              className="border-b border-zenith-cream/10 py-4 font-sub text-sm uppercase tracking-[0.2em] text-zenith-cream transition-colors hover:text-zenith-sand"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            data-cta="header-mobile"
+            onClick={() => {
+              trackEvent("hero_cta_click", { location: "header_mobile" });
+              setIsMenuOpen(false);
+            }}
+            className="mt-6 inline-flex items-center justify-center border border-zenith-cream px-4 py-3 text-[11px] font-sub font-medium uppercase tracking-[0.2em] text-zenith-cream transition-colors hover:bg-zenith-cream hover:text-zenith-charcoal"
+          >
+            Request Info
+          </a>
+        </nav>
       </div>
     </header>
   );
