@@ -3,23 +3,16 @@
 declare global {
   interface Window {
     dataLayer?: Record<string, unknown>[];
-    clarity?: (command: string, eventName: string) => void;
+    clarity?: (command: string, ...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
     __clarityQueue?: string[];
   }
 }
 
-export const PRODUCTION_HOSTNAME = "www.greggrossman.com";
-export const PRODUCTION_ORIGIN = `https://${PRODUCTION_HOSTNAME}`;
-
 export type AnalyticsPayload = Record<string, unknown>;
 
-export function isProductionHost() {
-  if (typeof window === "undefined") return false;
-  return window.location.hostname === PRODUCTION_HOSTNAME;
-}
-
 export function trackEvent(event: string, payload: AnalyticsPayload = {}) {
-  if (typeof window === "undefined" || !isProductionHost()) return;
+  if (typeof window === "undefined") return;
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event, ...payload });
@@ -27,10 +20,15 @@ export function trackEvent(event: string, payload: AnalyticsPayload = {}) {
   if (typeof window.clarity === "function") {
     window.clarity("event", event);
   } else {
-    // GTM (and Clarity inside it) loads afterInteractive — queue early events
-    // so nothing is dropped before the script arrives.
     window.__clarityQueue = window.__clarityQueue || [];
     window.__clarityQueue.push(event);
+  }
+}
+
+export function trackMetaPixel(event: string, payload: AnalyticsPayload = {}) {
+  if (typeof window === "undefined") return;
+  if (typeof window.fbq === "function") {
+    window.fbq("track", event, payload);
   }
 }
 
@@ -63,7 +61,7 @@ export function getAttribution() {
   }
 
   const params = new URLSearchParams(window.location.search);
-  const stored = window.sessionStorage.getItem("gregg_rossman_attribution");
+  const stored = window.sessionStorage.getItem("zenith_attribution");
   let previous: Record<string, string> = {};
   try {
     previous = stored ? JSON.parse(stored) : {};
@@ -81,7 +79,7 @@ export function getAttribution() {
   };
 
   window.sessionStorage.setItem(
-    "gregg_rossman_attribution",
+    "zenith_attribution",
     JSON.stringify(attribution)
   );
 

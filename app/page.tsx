@@ -1,52 +1,38 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import WhatYouReceiveSection from "@/components/WhatYouReceiveSection";
-import ProcessSection from "@/components/ProcessSection";
-import PropertyShowcaseSection from "@/components/PropertyShowcaseSection";
-import TrustSection from "@/components/TrustSection";
+import Nav from "@/components/Nav";
+import Hero from "@/components/Hero";
+import StatBar from "@/components/StatBar";
+import DevelopmentSection from "@/components/DevelopmentSection";
+import ResidencesGrid from "@/components/ResidencesGrid";
+import OpportunitySection from "@/components/OpportunitySection";
+import LeadFormSection from "@/components/LeadFormSection";
+import MapSection from "@/components/MapSection";
+import TeamSection from "@/components/TeamSection";
 import FAQSection from "@/components/FAQSection";
-import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
-import StickyMobileCTA from "@/components/StickyMobileCTA";
-import { LandingPageAnalytics } from "@/components/AnalyticsEvents";
+import { LandingPageAnalytics, ScrollReveal } from "@/components/AnalyticsEvents";
 
 export const metadata: Metadata = {
-  title: "Luxury Home Valuation | Gregg Rossman — Keller Williams St Pete",
+  title: "Zenith Milwaukee | 701 E Kilbourn Avenue | New Luxury Condominiums",
   description:
-    "Get a private, strategy-driven home valuation from Gregg Rossman. Serving St. Petersburg, Tampa Bay, and Florida's Gulf Coast. More than an automated estimate.",
+    "Zenith is Milwaukee's first new luxury condominium tower in a generation. 226 residences from $400k at 701 E Kilbourn Avenue. Exclusively marketed by Falk·Ruvin·Gallagher, Keller Williams.",
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "RealEstateAgent",
-  name: "Gregg Rossman",
+  "@type": "ApartmentComplex",
+  name: "Zenith",
   description:
-    "Luxury resale single-family home specialist serving Tampa Bay and Florida's Gulf Coast. Private, strategy-driven home valuations for discerning sellers.",
-  memberOf: {
-    "@type": "Organization",
-    name: "Keller Williams St Pete Realty",
-  },
+    "Milwaukee's first new luxury condominium tower in a generation. 226 residences, including 3 penthouses, from $400k to $3M.",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "360 Central Ave, Ste 600",
-    addressLocality: "St. Petersburg",
-    addressRegion: "FL",
-    postalCode: "33701",
+    streetAddress: "701 E Kilbourn Ave",
+    addressLocality: "Milwaukee",
+    addressRegion: "WI",
+    postalCode: "53202",
     addressCountry: "US",
   },
-  areaServed: [
-    "St. Petersburg, FL",
-    "St. Pete Beach, FL",
-    "Tampa, FL",
-    "Wesley Chapel, FL",
-  ],
-  knowsAbout: [
-    "Luxury Real Estate",
-    "Tampa Bay Luxury Homes",
-    "Gulf Coast Properties",
-    "Home Valuation",
-  ],
+  numberOfUnits: 226,
 };
 
 export default function HomePage() {
@@ -57,17 +43,19 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <LandingPageAnalytics />
-      <Header />
+      <ScrollReveal />
+      <Nav />
       <main>
-        <HeroSection />
-        <WhatYouReceiveSection />
-        <ProcessSection />
-        <PropertyShowcaseSection />
-        <TrustSection />
+        <Hero />
+        <StatBar />
+        <DevelopmentSection />
+        <ResidencesGrid />
+        <OpportunitySection />
+        <LeadFormSection />
+        <MapSection />
+        <TeamSection />
         <FAQSection />
-        <FinalCTASection />
       </main>
-      <StickyMobileCTA />
       <Footer />
     </>
   );

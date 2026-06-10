@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const PRODUCTION_HOST = "www.greggrossman.com";
-const REDIRECT_HOSTS = new Set(["greggrossman.vercel.app", "greggrossman.com"]);
+const PRODUCTION_HOST = "zenithatkilbourn.com";
+const REDIRECT_HOSTS = new Set(["www.zenithatkilbourn.com"]);
 
 export function middleware(request: NextRequest) {
   const host = request.headers.get("host")?.split(":")[0] ?? "";

@@ -1,61 +1,70 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Cormorant_Garamond, Arsenal, Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-cormorant",
   display: "swap",
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
 
-const dmSans = DM_Sans({
+const arsenal = Arsenal({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-arsenal",
+  display: "swap",
+  weight: ["400", "700"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
   weight: ["300", "400", "500", "600"],
 });
 
-const BASE_URL = "https://www.greggrossman.com";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://zenithatkilbourn.com";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
-  title: "Luxury Home Valuation | Gregg Rossman",
+  metadataBase: new URL(SITE_URL),
+  title: "Zenith Milwaukee | 701 E Kilbourn Avenue | New Luxury Condominiums",
   description:
-    "Get a private, strategy-driven home valuation from Gregg Rossman. A more thoughtful approach for luxury sellers who want more than an automated estimate.",
+    "Zenith is Milwaukee's first new luxury condominium tower in a generation. 226 residences from $400k at 701 E Kilbourn Avenue. Exclusively marketed by Falk·Ruvin·Gallagher, Keller Williams.",
   keywords: [
-    "luxury home valuation",
-    "St. Petersburg real estate",
-    "Gregg Rossman",
-    "private home value consultation",
+    "Milwaukee luxury condominiums",
+    "701 E Kilbourn Avenue",
+    "Zenith Milwaukee",
+    "new construction condos Milwaukee",
+    "Falk Ruvin Gallagher Milwaukee",
   ],
   openGraph: {
-    title: "Luxury Home Valuation | Gregg Rossman",
+    title: "Zenith Milwaukee — Where the View, the Address, and the Lifestyle Come Together",
     description:
-      "A private, strategy-driven home valuation for sellers who want more than an automated estimate.",
+      "226 residences. 3 penthouses. From $400k to $3M. MLS launch June 23, 2026.",
     type: "website",
     locale: "en_US",
-    url: BASE_URL,
-    siteName: "Gregg Rossman",
+    url: SITE_URL,
+    siteName: "Zenith Milwaukee",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-zenith.jpg",
         width: 1200,
         height: 630,
-        alt: "Gregg Rossman — Luxury Home Valuation",
+        alt: "Zenith — 701 E Kilbourn Avenue, Milwaukee",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Luxury Home Valuation | Gregg Rossman",
+    title: "Zenith Milwaukee | New Luxury Condominiums",
     description:
-      "A private, strategy-driven home valuation for luxury sellers.",
+      "226 residences. 3 penthouses. From $455,990 to $2,975,000.",
   },
   alternates: {
-    canonical: BASE_URL,
+    canonical: SITE_URL,
   },
   robots: {
     index: true,
@@ -64,27 +73,55 @@ export const metadata: Metadata = {
   },
 };
 
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
+    <html
+      lang="en"
+      className={`${cormorant.variable} ${arsenal.variable} ${inter.variable}`}
+    >
       <head>
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`if (window.location.hostname === 'www.greggrossman.com') {
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        {GTM_ID && (
+          <Script id="google-tag-manager" strategy="afterInteractive">
+            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WXKJLM2M');
-}`}
-        </Script>
+})(window,document,'script','dataLayer','${GTM_ID}');`}
+          </Script>
+        )}
+        {CLARITY_ID && (
+          <Script id="microsoft-clarity" strategy="afterInteractive">
+            {`(function(c,l,a,r,i,t,y){
+c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "${CLARITY_ID}");`}
+          </Script>
+        )}
+        {META_PIXEL_ID && (
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${META_PIXEL_ID}');
+fbq('track', 'PageView');`}
+          </Script>
+        )}
       </head>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

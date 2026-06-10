@@ -5,32 +5,33 @@ import { trackEvent } from "@/lib/analytics";
 
 export default function FAQSection() {
   return (
-    <section className="bg-white py-24 md:py-32 border-t border-stone-100">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="grid lg:grid-cols-[360px_1fr] gap-16 lg:gap-24 items-start">
-
+    <section className="bg-zenith-cream py-24 md:py-32 reveal">
+      <div className="mx-auto max-w-7xl px-6 md:px-10">
+        <div className="grid items-start gap-16 lg:grid-cols-[360px_1fr] lg:gap-24">
           {/* Left — sticky header */}
           <div className="lg:sticky lg:top-28">
-            <div className="flex items-center gap-4 mb-8">
-              <span className="block w-10 h-px bg-gold-500" />
+            <div className="mb-8 flex items-center gap-4">
+              <span className="olive-rule" />
               <span className="label-tag">Questions</span>
             </div>
 
-            <h2 className="section-heading text-balance mb-6">
+            <h2 className="section-heading mb-6 text-balance">
               Common{" "}
-              <span className="italic text-charcoal-600">Questions</span>
+              <span className="font-serif italic text-zenith-bronze">
+                Questions
+              </span>
             </h2>
 
-            <p className="text-stone-400 text-[15px] leading-relaxed font-sans mb-8">
-              A few answers for sellers who want to understand the process
-              before they begin.
+            <p className="mb-8 text-[15px] leading-relaxed text-zenith-charcoal/70 font-sans">
+              A few answers for buyers who want to understand Zenith before
+              they reach out.
             </p>
 
             <a
-              href="#hero-form"
+              href="#contact"
               data-cta="faq"
-              onClick={() => trackEvent("faq_cta_click")}
-              className="inline-block luxury-button-outline text-center"
+              onClick={() => trackEvent("hero_cta_click", { location: "faq" })}
+              className="inline-block luxury-button-outline-dark text-center"
             >
               Get Started
             </a>
