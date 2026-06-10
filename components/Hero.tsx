@@ -63,7 +63,7 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 pt-16 text-center md:px-8">
-        <p className="mb-5 font-sub text-sm uppercase tracking-[0.15em] text-zenith-olive">
+        <p className="mb-5 font-sub text-sm font-medium uppercase tracking-[0.1em] text-zenith-cream/90">
           Milwaukee &mdash; 701 E Kilbourn Avenue
         </p>
 
